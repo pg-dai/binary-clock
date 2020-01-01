@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <title>バイナリ時計</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        setInterval(update, 1000);
+        function update() {
+            const now = new Date();
+            const hh = z2(now.getHours());
+            const mm = z2(now.getMinutes());
+            const ss = z2(now.getSeconds());
+            const hhmmss = hh + mm + ss;
+            const style0 = {color: "gray"};
+            const style1 = {color: "gray"};
+            const lines = [];
+            for(let i = 0; i < hhmmss.length; i++) {
+                const v = parseInt(hhmmss.substr(i, 1));
+                const binary = "0000" + v.toString(2);
+                const binary8 = binary.substr(binary.length - 4, 4);
+                for(let j = 0; j < binary8.length; j++){
+                    if(binary8.substr(j, 1) === "0") {
+                        lines.push(<span style={style0}>○</span>);
+                    } else {
+                        lines.push(<span style={style1}>●</span>);
+                    }
+                }
+                lines.push(<br />);
+            }
+            const element = document.getElementById("root");
+            ReactDOM.render(<div>{lines}</div>, element)
+        }
+        function z2(v){
+            v = String("00" + v);
+            return v.substr(v.length -2, 2);
+        }
+    </script>
+</body>
+</html>

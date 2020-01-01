@@ -1,2 +1,4 @@
 # binary-clock
-バイナリ時計
+
+https://pg-dai.github.io/binary-clock/
+
